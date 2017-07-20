@@ -1,16 +1,18 @@
 <template>
   <div id="app">
     <header-nav></header-nav>
-    <el-row :class="{contantor: true, 'app-state-close': appStateClose}">
-      <sidebar @changeAppState="changeAppState" :appStateClose="appStateClose"></sidebar>
-      <div class="views">
+    <Row :class="{contantor: true, 'app-state-close': appStateClose}">
+      <Col :class="{sidebar: true, 'state-close': appStateClose}">
+        <sidebar @changeAppState="changeAppState" :appStateClose="appStateClose"></sidebar>
+      </Col>
+      <Col class="views">
         <transition name="fade" mode="out-in" appear>
           <keep-alive>
             <router-view></router-view>
           </keep-alive>
         </transition>
-      </div>
-    </el-row>
+      </Col>
+    </Row>
   </div>
 </template>
 
@@ -27,6 +29,7 @@ export default {
   methods: {
     changeAppState() {
       this.appStateClose = !this.appStateClose
+      console.log('this.appStateClose', this.appStateClose);
     }
   },
   data () {

@@ -62,9 +62,12 @@ const config = {
           ]
         })
       }, {
-        test: /\.jsx?$/,
+        test: /\.js$/,
         exclude: /node_modules/,
         use: ['happypack/loader?id=happybabel']
+      },
+      {
+        test: /iview.src.*?js$/, loader: 'babel-loader'
       }, {
         test: /\.(jpe?g|png|gif|svg)(\?\S*)?$/i,
         use: ['url-loader?limit=10000&name=[name].[ext]&outputPath=assets/images/']

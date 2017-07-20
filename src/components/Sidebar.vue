@@ -1,16 +1,25 @@
 <template>
-  <el-col :class="{sidebar: true, 'state-close': appStateClose}">
+  <div class="sidebar">
     <switcher @changeSidebarState="changeSidebarState" :switcherClose="appStateClose"></switcher>
-    <el-menu theme="dark" default-active="1" router>
-      <el-menu-item index="1" :route="{path: '/'}"><i class="el-icon-document"></i>首页</el-menu-item>
-      <el-menu-item index="2" :route="{path: '/order'}"><i class="el-icon-caret-bottom"></i>委托下单</el-menu-item>
-      <el-menu-item index="3" :route="{path: '/configuration'}"><i class="el-icon-setting"></i>配置</el-menu-item>
-      <el-menu-item index="4" :route="{path: '/user'}"><i class="el-icon-menu"></i>用户</el-menu-item>
-    </el-menu>
-  </el-col>
+    <Menu theme="dark" active-name="1" width="auto">
+      <Menu-item name="1">
+        <router-link to="/" exact><Icon type="checkmark"></Icon>首页</router-link>
+      </Menu-item>
+      <Menu-item name="2">
+        <router-link to="/order" exact><Icon type="checkmark"></Icon>委托下单</router-link>
+      </Menu-item>
+      <Menu-item name="3">
+        <router-link to="/configuration" exact><Icon type="checkmark"></Icon>配置</router-link>
+      </Menu-item>
+      <Menu-item name="4">
+        <router-link to="/user" exact><Icon type="checkmark"></Icon>用户</router-link>
+      </Menu-item>
+    </Menu>
+  </div>
 </template>
 <script>
 import Switcher from './Switcher.vue';
+
 export default {
   name: "Sidebar",
   props: ["changeAppState", "appStateClose"],
@@ -20,11 +29,20 @@ export default {
   methods: {
     changeSidebarState() {
       this.$emit('changeAppState')
+      console.log('appStateClose', this.appStateClose);
     }
   }
 }
 </script>
 <style lang="less" scoped>
 @import '../style/variable/index.less';
-@import './sidebar.less';
+.sidebar {
+  .ivu-menu {
+    .ivu-menu-item {
+      padding: 0px;
+      height: 50px;
+      line-height: 50px;
+    }
+  }
+}
 </style>

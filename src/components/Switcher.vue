@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="switcher">
     <div :class="{'inner-box': true, close: switcherClose}" @click="handleClick">
       <span class="border-left"></span>
       <span class="border-middle"></span>
@@ -13,14 +13,15 @@ export default {
   props: ['changeSidebarState', 'switcherClose'],
   methods: {
     handleClick: function () {
-      this.$emit('changeSidebarState');
+      this.$emit('changeSidebarState')
+      console.log('switcherClose', this.switcherClose)
     }
   }
 }
 </script>
 <style lang="less" scoped>
   @import '../style/variable/index.less';
-  .container {
+  .switcher {
     position: relative;
     height: 50px;
     .close {
