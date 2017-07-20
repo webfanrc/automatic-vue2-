@@ -1,17 +1,13 @@
 <template>
-  <h2>在线矿机</h2>
+  <h2>用户</h2>
 </template>
 <script>
 export default {
-  name: 'About',
+  name: 'User',
   components: {
   },
   data () {
     return {
-      title: 'About page!!',
-      lists: [
-        'james', 'wade', 'pop'
-      ]
     }
   }
 }

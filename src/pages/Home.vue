@@ -1,14 +1,13 @@
 <template>
   <div>
-    <h2>全部矿机</h2>
+    <h2>首页</h2>
   </div>
 </template>
 <script>
 export default {
-  name: 'Shop',
+  name: 'Home',
   data () {
     return {
-      msg: 'Shop page!!'
     }
   }
 }

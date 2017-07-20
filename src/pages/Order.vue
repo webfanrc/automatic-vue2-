@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>意见反馈</h2>
+    <h2>委托下单</h2>
   </div>
 </template>
 <script>
@@ -8,7 +8,6 @@ export default {
   name: 'Shop',
   data () {
     return {
-      msg: 'Shop page!!'
     }
   }
 }
