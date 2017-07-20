@@ -1,0 +1,22 @@
+.contantor {
+  position: absolute;
+  top: 60px;
+  bottom: 0px;
+  width: 100%;
+  padding-left: 200px;
+  transition: all 0.3s ease;
+  .views {
+    float: left;
+    height: 100%;
+    width: 100%;
+    .fade-enter-active, .fade-leave-active {
+      transition: all 0.3s ease
+    }
+    .fade-enter, .fade-leave-active {
+      opacity: 0
+    }
+  }
+}
+.app-state-close {
+  padding-left: 55px;
+}

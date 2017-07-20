@@ -1,0 +1,31 @@
+.sidebar {
+  background: @dark-light;
+  height: 100%;
+  width: 200px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: absolute;
+  left: 0px;
+  .el-menu {
+    width: 200px;
+  }
+  .el-menu-item [class^=el-icon-],.el-submenu [class^=el-icon-],
+  .el-submenu .el-menu-item-group li.el-menu-item {
+    transition: all 0.3s ease;
+  }
+  .el-submenu div {
+    color: red;
+  }
+}
+.state-close {
+  width: 55px;
+  .el-menu-item [class^=el-icon-],.el-submenu [class^=el-icon-] {
+    margin-right: 30px;
+  }
+  .el-submenu .el-menu-item-group li.el-menu-item {
+    padding-left: 20px !important;
+  }
+  .el-submenu__icon-arrow{
+    right: -10px !important;
+  }
+}
