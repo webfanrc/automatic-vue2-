@@ -12,13 +12,14 @@
         <router-link to="/configuration" exact><Icon type="ios-settings-strong"></Icon>配置</router-link>
       </Menu-item>
       <Menu-item name="4">
-        <router-link to="/user" exact><Icon type="ios-person"></Icon>用户</router-link>
+        <router-link to="/user" exact><Icon type="person"></Icon>用户</router-link>
       </Menu-item>
     </Menu>
   </div>
 </template>
 <script>
 import Switcher from './Switcher.vue';
+import Checkbox from 'iview/src/components/checkbox';
 
 export default {
   name: "Sidebar",
@@ -44,12 +45,12 @@ export default {
       a {
         color: @gray-light;
         display: inline-block;
-        padding-left: 23px;
+        padding-left: 21px;
         width: 100%;
         .ivu-icon {
           transition: all 0.3s ease;
           margin-right: 12px;
-          font-size: 20px;
+          font-size: 18px;
         }
       }
       .router-link-active {

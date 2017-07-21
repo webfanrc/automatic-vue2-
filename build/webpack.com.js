@@ -65,8 +65,7 @@ const config = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: ['happypack/loader?id=happybabel']
-      },
-      {
+      }, {
         test: /iview.src.*?js$/, loader: 'babel-loader'
       }, {
         test: /\.(jpe?g|png|gif|svg)(\?\S*)?$/i,
@@ -101,7 +100,7 @@ const config = {
     }),
     new HappyPack({
       id: 'less',
-      loaders: ['css-loader!less-loader'],
+      loaders: ['css-loader!postcss-loader!less-loader'],
       threadPool: happyThreadPool
     }),
     new HappyPack({
