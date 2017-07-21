@@ -1,6 +1,6 @@
 <template>
-  <div class="switcher">
-    <div :class="{'inner-box': true, close: switcherClose}" @click="handleClick">
+  <div :class="{switcher: true, 'switch-state-close': this.switcherStateClose}">
+    <div :class="{'inner-box': true, close: this.switcherStateClose}" @click="handleClick">
       <span class="border-left"></span>
       <span class="border-middle"></span>
       <span class="border-right"></span>
@@ -10,11 +10,10 @@
 <script>
 export default {
   name: "Switcher",
-  props: ['changeSidebarState', 'switcherClose'],
+  props: ['changeSidebarState', 'switcherStateClose'],
   methods: {
     handleClick: function () {
       this.$emit('changeSidebarState')
-      console.log('switcherClose', this.switcherClose)
     }
   }
 }
@@ -24,6 +23,8 @@ export default {
   .switcher {
     position: relative;
     height: 50px;
+    width: 200px;
+    transition: all 0.3s ease;
     .close {
       transform: rotate(90deg);
     }
@@ -61,5 +62,8 @@ export default {
         background: @base;
       }
     }
+  }
+  .switch-state-close {
+    width: 55px;
   }
 </style>

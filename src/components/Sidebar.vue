@@ -1,18 +1,18 @@
 <template>
   <div class="sidebar">
-    <switcher @changeSidebarState="changeSidebarState" :switcherClose="appStateClose"></switcher>
-    <Menu theme="dark" active-name="1" width="auto">
+    <switcher @changeSidebarState="changeSidebarState" :switcherStateClose="sidebarStateClose"></switcher>
+    <Menu theme="dark" active-name="1" width="auto" :class="{'siderbar-state-close': this.sidebarStateClose}">
       <Menu-item name="1">
-        <router-link to="/" exact><Icon type="checkmark"></Icon>首页</router-link>
+        <router-link to="/" exact><Icon type="home"></Icon>首页</router-link>
       </Menu-item>
       <Menu-item name="2">
-        <router-link to="/order" exact><Icon type="checkmark"></Icon>委托下单</router-link>
+        <router-link to="/order" exact><Icon type="archive"></Icon>委托下单</router-link>
       </Menu-item>
       <Menu-item name="3">
-        <router-link to="/configuration" exact><Icon type="checkmark"></Icon>配置</router-link>
+        <router-link to="/configuration" exact><Icon type="ios-settings-strong"></Icon>配置</router-link>
       </Menu-item>
       <Menu-item name="4">
-        <router-link to="/user" exact><Icon type="checkmark"></Icon>用户</router-link>
+        <router-link to="/user" exact><Icon type="ios-person"></Icon>用户</router-link>
       </Menu-item>
     </Menu>
   </div>
@@ -22,14 +22,13 @@ import Switcher from './Switcher.vue';
 
 export default {
   name: "Sidebar",
-  props: ["changeAppState", "appStateClose"],
+  props: ["changeAppState", "sidebarStateClose"],
   components: {
     switcher: Switcher
   },
   methods: {
     changeSidebarState() {
       this.$emit('changeAppState')
-      console.log('appStateClose', this.appStateClose);
     }
   }
 }
@@ -42,6 +41,27 @@ export default {
       padding: 0px;
       height: 50px;
       line-height: 50px;
+      a {
+        color: @gray-light;
+        display: inline-block;
+        padding-left: 23px;
+        width: 100%;
+        .ivu-icon {
+          transition: all 0.3s ease;
+          margin-right: 12px;
+          font-size: 20px;
+        }
+      }
+      .router-link-active {
+        color: @base;
+      }
+    }
+  }
+  .siderbar-state-close {
+    .ivu-menu-item {
+      a .ivu-icon {
+        margin-right: 30px;
+      }
     }
   }
 }

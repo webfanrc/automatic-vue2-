@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <header-nav></header-nav>
-    <Row :class="{contantor: true, 'app-state-close': appStateClose}">
-      <Col :class="{sidebar: true, 'state-close': appStateClose}">
-        <sidebar @changeAppState="changeAppState" :appStateClose="appStateClose"></sidebar>
+    <Row :class="{contantor: true, 'app-state-close': this.appStateClose}">
+      <Col :class="{sidebar: true, 'state-close': this.appStateClose}">
+        <sidebar @changeAppState="changeAppState" :sidebarStateClose="appStateClose"></sidebar>
       </Col>
       <Col class="views">
         <transition name="fade" mode="out-in" appear>
@@ -29,7 +29,6 @@ export default {
   methods: {
     changeAppState() {
       this.appStateClose = !this.appStateClose
-      console.log('this.appStateClose', this.appStateClose);
     }
   },
   data () {
