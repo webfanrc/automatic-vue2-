@@ -1,54 +1,99 @@
 <template>
-  <Row>
-    <Col :span="22">
-      <Table :columns="columns1" :data="data1"></Table>
+  <Row :gutter="30" class="order-page">
+    <Col :md="12">
+      <Table :columns="columns1" :data="[]"></Table>
+    </Col>
+    <Col :md="12">
+      <Table :row-class-name="rowClassName" :columns="columns1" :data="totalData"></Table>
     </Col>
   </Row>
 </template>
 <script>
 export default {
   name: 'Shop',
+  timer: null,
   data () {
     return {
       columns1: [
         {
-          title: '姓名',
+          title: '买卖',
           key: 'name'
         },
         {
-          title: '年龄',
-          key: 'age'
+          title: '价格（￥）',
+          key: 'price'
         },
         {
-          title: '地址',
-          key: 'address'
+          title: '委托单（Ƀ）',
+          key: 'orders'
+        },
+        {
+          title: '平台',
+          key: 'platform'
         }
       ],
-      data1: [
-        {
-          name: '王小明',
-          age: 18,
-          address: '北京市朝阳区芍药居'
-        },
-        {
-          name: '张小刚',
-          age: 25,
-          address: '北京市海淀区西二旗'
-        },
-        {
-          name: '李小红',
-          age: 30,
-          address: '上海市浦东新区世纪大道'
-        },
-        {
-          name: '周小伟',
-          age: 26,
-          address: '深圳市南山区深南大道'
+      asksData: [],
+      bidsData: [],
+      totalData: []
+    }
+  },
+  created () {
+    this.fetchAsksAndDidsData();
+    this.timer = window.setInterval(this.fetchAsksAndDidsData, 2000);
+  },
+  beforeDestroy () {
+    window.clearInterval(this.timer);
+  },
+  methods: {
+    rowClassName (row, index) {
+      if (row.name.indexOf('卖') !== -1) {
+        return 'ask-row';
+      } else {
+        return 'bids-row';
+      }
+      return '';
+    },
+    fetchAsksAndDidsData () {
+      // this.$http.get('http://192.168.2.180:8080/depth')
+      this.$http.get('http://localhost:3001/depth')
+      .then(response => {
+        const data = response.data;
+        if (data && data.orders) {
+          const orders = data.orders;
+          const Len = orders.asks.length;
+          this.asksData = orders.asks.map((item, index) => ({
+            name: `卖(${Len - index})`,
+            price: item[0],
+            orders: item[1],
+            platform: 'mac'
+          }));
+          this.bidsData = orders.bids.map((item, index) => ({
+            name: `买(${index + 1})`,
+            price: item[0],
+            orders: item[1],
+            platform: 'win'
+          }));
+          this.totalData = this.asksData.concat(this.bidsData);
         }
-      ]
+        // this.$Message.success(`${response && response.statusText || ''}, 请求数据成功`);
+      }, (error) => {
+        this.$Message.error(`${error && error.statusText || ''}, 请求数据失败`);
+      })
     }
   }
 }
 </script>
-<style lang="less" scoped>
+<style lang="less">
+.order-page {
+  .ask-row {
+    .ivu-table-cell {
+      color: red;
+    }
+  }
+  .bids-row {
+    .ivu-table-cell {
+      color: green;
+    }
+  }
+}
 </style>

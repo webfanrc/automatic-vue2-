@@ -16,15 +16,13 @@ import moment from 'moment'
 export default {
   name: 'Home',
   created () {
-    // this.$http.get('http://192.168.2.122:8080/history')
+    // this.$http.get('http://192.168.2.180:8080/history')
     this.$http.get('http://localhost:3001/history')
     .then((response) => {
-      // if (response.body && response.body.orders.length > 0) {
-      //   this.$store.state.homeData = response.body.orders;
-      if (response.data.body && response.data.body.orders.length > 0) {
-        this.$store.state.homeData = response.data.body.orders;
+      if (response.data && response.data.orders.length > 0) {
+        this.$store.state.homeData = response.data.orders;
         this.dealHomeData()
-        this.dealedDataLength = this.dealedData.length;
+        this.dealedDataLength = response.data.orders.total || this.dealedData.length;
         this.handlePageChang()
       }
       this.$Message.success(`${response && response.statusText || ''}, 请求数据成功`);
