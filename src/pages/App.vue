@@ -1,30 +1,33 @@
 <template>
   <div id="app">
     <header-nav></header-nav>
-    <Row :class="{contantor: true, 'app-state-close': this.appStateClose}">
-      <Col :class="{sidebar: true, 'state-close': this.appStateClose}">
+    <i-row :class="{contantor: true, 'app-state-close': this.appStateClose}">
+      <i-col :class="{sidebar: true, 'state-close': this.appStateClose}">
         <sidebar @changeAppState="changeAppState" :sidebarStateClose="appStateClose"></sidebar>
-      </Col>
-      <Col class="views">
+      </i-col>
+      <i-col class="views">
         <transition name="fade" mode="out-in" appear>
           <keep-alive>
             <router-view></router-view>
           </keep-alive>
         </transition>
-      </Col>
-    </Row>
+      </i-col>
+    </i-row>
   </div>
 </template>
 
 <script>
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
+import { Row, Col } from 'iview/src/components/grid';
 
 export default {
   name: 'App',
   components: {
     'header-nav': Header,
-    'sidebar': Sidebar
+    'sidebar': Sidebar,
+    iRow: Row,
+    iCol: Col
   },
   methods: {
     changeAppState() {

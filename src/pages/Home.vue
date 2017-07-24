@@ -1,29 +1,41 @@
 <template>
-  <Row>
-    <Col :span="22">
-      <Tabs value="name1">
-        <Tab-pane label="已完成" name="name1">
-          <Table border :columns="columns" :data="dealedData"></Table>
-          <Page :total="100"></Page>
-        </Tab-pane>
-        <Tab-pane label="未完成" name="name2">标签二的内容</Tab-pane>
-      </Tabs>
-    </Col>
-  </Row>
+  <i-row>
+    <i-col :span="22">
+      <i-tabs value="name1">
+        <i-tab-pane label="已完成" name="name1">
+          <i-table border :columns="columns" :data="dealedData"></i-table>
+          <i-page :total="100"></i-page>
+        </i-tab-pane>
+        <i-tab-pane label="未完成" name="name2">标签二的内容</i-tab-pane>
+      </i-tabs>
+    </i-col>
+  </i-row>
 </template>
 <script>
 import moment from 'moment';
+import { Row, Col } from 'iview/src/components/grid';
+import Table from 'iview/src/components/table';
+import Tabs from 'iview/src/components/tabs';
+import Page from 'iview/src/components/page';
 export default {
   name: 'Home',
+  components: {
+    iRow: Row,
+    iCol: Col,
+    'iTable': Table,
+    iTabs: Tabs,
+    iTabPane: Tabs.Pane,
+    iPage:Page
+  },
   created () {
     this.$http.get('http://192.168.2.122:8080/history').then((response) => {
       if (response.body && response.body.orders.length > 0) {
         this.$store.state.homeData = response.body.orders;
         this.dealHomeData()
       }
-      this.$Message.success(`${response.statusText || ''}, 请求数据成功`);
+      this.$Message.success(`${response && response.statusText || ''}, 请求数据成功`);
     }, (error) => {
-      this.$Message.error(`${error.statusText || ''}, 请求数据失败`);
+      this.$Message.error(`${error && error.statusText || ''}, 请求数据失败`);
     });
   },
   methods: {
@@ -31,15 +43,15 @@ export default {
       const isColor = type === 'color';
       switch (state) {
         case -1:
-          return isColor ? '#ed3f14' : '已撤销';
+          return isColor ? 'red' : '已撤销';
         case 0:
-          return isColor ? '#ff9900' : '未成交';
+          return isColor ? 'orange' : '未成交';
         case 1:
-          return isColor ? '#2d8cf0' : '部分成交';
+          return isColor ? 'blue' : '部分成交';
         case 2:
-          return isColor ? '#19be6b' : '完全成交';
+          return isColor ? 'green' : '完全成交';
         case 4:
-          return isColor ? '#e4e807' : '撤单处理中';
+          return isColor ? 'yellow' : '撤单处理中';
         default:
           return '确认中'
       }
@@ -81,7 +93,6 @@ export default {
             const row = params.row;
             const color = this.selectStatus(row.status, 'color');
             const text = this.selectStatus(row.status);
-            console.log('color', color);
             return h('Tag', {
               props: {
                 type: 'dot',
