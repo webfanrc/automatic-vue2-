@@ -3,7 +3,7 @@
 #### 用户管理后台单页面应用
 
 **特点**
-1. 实现 **iview2** 组件和样式按需加载 （src/com;ponents/iview 和 src/style/iview）
+1. 实现 **iview2** 组件和样式按需加载 （src/components/iview 和 src/style/iview）
 2. `webpack` 的 `chunkhash` 缓存
 3. 路由懒加载
 4. 公共库代码提取
