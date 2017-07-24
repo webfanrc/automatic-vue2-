@@ -1,20 +1,13 @@
 <template>
-  <i-row>
-    <i-col :span="22">
-      <i-table :columns="columns1" :data="data1"></i-table>
-    </i-col>
-  </i-row>
+  <Row>
+    <Col :span="22">
+      <Table :columns="columns1" :data="data1"></Table>
+    </Col>
+  </Row>
 </template>
 <script>
-import { Row, Col } from 'iview/src/components/grid';
-import Table from 'iview/src/components/table';
 export default {
   name: 'Shop',
-  components: {
-    iRow: Row,
-    iCol: Col,
-    iTable: Table
-  },
   data () {
     return {
       columns1: [

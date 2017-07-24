@@ -3,16 +3,16 @@
     <switcher @changeSidebarState="changeSidebarState" :switcherStateClose="sidebarStateClose"></switcher>
     <i-menu theme="dark" active-name="1" width="auto" :class="{'siderbar-state-close': this.sidebarStateClose}">
       <i-menu-item name="1">
-        <router-link to="/" exact><Icon type="home"></Icon>首页</router-link>
+        <router-link to="/" exact><i-icon type="home"></i-icon>首页</router-link>
       </i-menu-item>
       <i-menu-item name="2">
-        <router-link to="/order" exact><Icon type="archive"></Icon>委托下单</router-link>
+        <router-link to="/order" exact><i-icon type="archive"></i-icon>委托下单</router-link>
       </i-menu-item>
       <i-menu-item name="3">
-        <router-link to="/configuration" exact><Icon type="ios-settings-strong"></Icon>配置</router-link>
+        <router-link to="/configuration" exact><i-icon type="ios-settings-strong"></i-icon>配置</router-link>
       </i-menu-item>
       <i-menu-item name="4">
-        <router-link to="/user" exact><Icon type="person"></Icon>用户</router-link>
+        <router-link to="/user" exact><i-icon type="person"></i-icon>用户</router-link>
       </i-menu-item>
     </i-menu>
   </div>
@@ -27,9 +27,9 @@ export default {
   props: ["changeAppState", "sidebarStateClose"],
   components: {
     switcher: Switcher,
-    'iMenu': Menu,
+    iMenu: Menu,
     iMenuItem: Menu.Item,
-    Icon
+    iIcon: Icon
   },
   methods: {
     changeSidebarState() {

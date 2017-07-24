@@ -2,31 +2,29 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import Iview from './components/iview'
 import App from './pages/App.vue'
 import router from './router'
-import LoadingBar from 'iview/src/components/loading-bar'
 import store from './store/store'
 import utils from './utils/utils'
 
-import './style/index.less'
-import 'iview/dist/styles/iview.css'
-
-Vue.prototype.$http = axios
+import './style/iview/index.less'
 
 utils.useElement(
-  Vue, Vuex,
+  Vue, Vuex, Iview
 )
 
 router.beforeEach((to, from, next) => {
-  LoadingBar.start()
+  Iview.LoadingBar.start()
   next()
 })
 
 router.afterEach((to, from, next) => {
-  LoadingBar.finish()
+  Iview.LoadingBar.finish()
   window.scrollTo(0, 0)
 })
 
+Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

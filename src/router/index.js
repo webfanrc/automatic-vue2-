@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-const Home = resolve => require(['@/pages/Home'], resolve)
-const Order = resolve => require(['@/pages/Order'], resolve)
-const Configuration = resolve => require(['@/pages/Configuration'], resolve)
-const User = resolve => require(['@/pages/User'], resolve)
-const NotFoundComponent = resolve => require(['@/pages/NotFoundComponent'], resolve)
+const Home = resolve => require(['../pages/Home'], resolve)
+const Order = resolve => require(['../pages/Order'], resolve)
+const Configuration = resolve => require(['../pages/Configuration'], resolve)
+const User = resolve => require(['../pages/User'], resolve)
+const NotFoundComponent = resolve => require(['../pages/NotFoundComponent'], resolve)
 
 Vue.use(Router)
 

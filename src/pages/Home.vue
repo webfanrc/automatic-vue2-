@@ -1,37 +1,31 @@
 <template>
-  <i-row>
-    <i-col :span="22">
-      <i-tabs value="name1">
-        <i-tab-pane label="已完成" name="name1">
-          <i-table border :columns="columns" :data="dealedData"></i-table>
-          <i-page :total="100"></i-page>
-        </i-tab-pane>
-        <i-tab-pane label="未完成" name="name2">标签二的内容</i-tab-pane>
-      </i-tabs>
-    </i-col>
-  </i-row>
+  <Row>
+    <Col :span="22">
+      <Tabs value="name1">
+        <Tab-pane label="已完成" name="name1">
+          <Table border :columns="columns" :data="dealedCurrentData"></Table>
+          <Page :total="dealedDataLength" :current="1" :pageSize="pageSize" @on-change="handlePageChang"></Page>
+        </Tab-pane>
+        <Tab-pane label="未完成" name="name2">标签二的内容</Tab-pane>
+      </Tabs>
+    </Col>
+  </Row>
 </template>
 <script>
-import moment from 'moment';
-import { Row, Col } from 'iview/src/components/grid';
-import Table from 'iview/src/components/table';
-import Tabs from 'iview/src/components/tabs';
-import Page from 'iview/src/components/page';
+import moment from 'moment'
 export default {
   name: 'Home',
-  components: {
-    iRow: Row,
-    iCol: Col,
-    'iTable': Table,
-    iTabs: Tabs,
-    iTabPane: Tabs.Pane,
-    iPage:Page
-  },
   created () {
-    this.$http.get('http://192.168.2.122:8080/history').then((response) => {
-      if (response.body && response.body.orders.length > 0) {
-        this.$store.state.homeData = response.body.orders;
+    // this.$http.get('http://192.168.2.122:8080/history')
+    this.$http.get('http://localhost:3001/history')
+    .then((response) => {
+      // if (response.body && response.body.orders.length > 0) {
+      //   this.$store.state.homeData = response.body.orders;
+      if (response.data.body && response.data.body.orders.length > 0) {
+        this.$store.state.homeData = response.data.body.orders;
         this.dealHomeData()
+        this.dealedDataLength = this.dealedData.length;
+        this.handlePageChang()
       }
       this.$Message.success(`${response && response.statusText || ''}, 请求数据成功`);
     }, (error) => {
@@ -40,28 +34,31 @@ export default {
   },
   methods: {
     selectStatus (state, type) {
-      const isColor = type === 'color';
+      const isColor = type === 'color'
       switch (state) {
         case -1:
-          return isColor ? 'red' : '已撤销';
+          return isColor ? 'red' : '已撤销'
         case 0:
-          return isColor ? 'orange' : '未成交';
+          return isColor ? 'orange' : '未成交'
         case 1:
-          return isColor ? 'blue' : '部分成交';
+          return isColor ? 'blue' : '部分成交'
         case 2:
-          return isColor ? 'green' : '完全成交';
+          return isColor ? 'green' : '完全成交'
         case 4:
-          return isColor ? 'yellow' : '撤单处理中';
+          return isColor ? 'yellow' : '撤单处理中'
         default:
           return '确认中'
       }
     },
     dealHomeData () {
-      this.dealedData = [].concat(this.$store.state.homeData);
+      this.dealedData = [].concat(this.$store.state.homeData)
       this.dealedData.map(item => {
-        item.create_date = moment(item.create_date).format("YYYY MM DD, h:mm:ss a");
-        return item;
+        item.create_date = moment(item.create_date).format('YYYY MM DD, h:mm:ss a')
+        return item
       })
+    },
+    handlePageChang (size = 1) {
+      this.dealedCurrentData = this.dealedData.slice(this.pageSize * size - this.pageSize, this.pageSize * size);
     }
   },
   data () {
@@ -90,18 +87,21 @@ export default {
           title: '状态',
           key: 'status',
           render: (h, params) => {
-            const row = params.row;
-            const color = this.selectStatus(row.status, 'color');
-            const text = this.selectStatus(row.status);
+            const row = params.row
+            const color = this.selectStatus(row.status, 'color')
+            const text = this.selectStatus(row.status)
             return h('Tag', {
               props: {
-                type: 'dot',
-                color: color
+                type: 'border',
+                color
               }
             }, text);
           }
         }
       ],
+      pageSize: 10,
+      dealedDataLength: 0,
+      dealedCurrentData: [],
       dealedData: []
     }
   }

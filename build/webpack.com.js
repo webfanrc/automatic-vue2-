@@ -5,13 +5,14 @@ const Webpack = require('webpack');
 const HappyPack = require('happypack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 const vueLoaderConfig = require('./vue-loader.conf');
 
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 // 根据NODE_ENV来启用
 const ExtractLess = new ExtractTextPlugin({
   allChunks: true,
-  filename: "style/style.[contenthash:8].css",
+  filename: "style/style.[name].[contenthash:8].css",
   disable: process.env.NODE_ENV === "development"
 });
 
@@ -26,7 +27,6 @@ const config = {
   output: {
     filename: 'js/[name].[chunkhash:8].js',
     path: Path.resolve(__dirname, '../dist'),
-    // sourceMapFilename: "./bundle.js.map",
     chunkFilename: "js/[name].[chunkhash:8].js",
     publicPath: "/"
   },
@@ -34,8 +34,6 @@ const config = {
     modules: [Path.resolve(__dirname, '../node_modules')],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src'),
-      '~': resolve('src/style/variable'),
       'moment': 'moment/min/moment.min.js'
     },
     extensions: ['.js', '.vue']
@@ -49,17 +47,15 @@ const config = {
         options: vueLoaderConfig
       }, {
         test: /\.css/,
-        use: ExtractTextPlugin.extract({
+        use: ExtractLess.extract({
           fallback: "style-loader",
           use: Path.resolve(__dirname, '../node_modules', 'happypack/loader') + '?id=css'
         })
       }, {
         test: /\.less$/,
-        use: ExtractTextPlugin.extract({
+        use: ExtractLess.extract({
           fallback: "style-loader",
-          use: [
-            Path.resolve(__dirname, '../node_modules', 'happypack/loader') + '?id=less',
-          ]
+          use: Path.resolve(__dirname, '../node_modules', 'happypack/loader') + '?id=less'
         })
       }, {
         test: /\.js$/,
@@ -81,7 +77,7 @@ const config = {
       name: 'vendor',
       minChunks: function(module) {
         // 该配置假定你引入的 vendor 存在于 node_modules 目录中
-        return module.context && module.context.indexOf('node_modules') !== -1;
+        return ( (module.context && module.context.indexOf('iview') !== -1) || (module.context && module.context.indexOf('node_modules') !== -1) ) ;
       }
     }),
     //CommonChunksPlugin will now extract all the common modules from vendor and main bundles
@@ -90,7 +86,7 @@ const config = {
       name: 'manifest',
       filename: 'manifest.js'
     }),
-    new HtmlWebpackPlugin({title: 'Vue2 App', filename: 'index.html', template: 'src/index.html'}),
+    new HtmlWebpackPlugin({title: '用户下单系统', filename: 'index.html', template: 'src/index.html'}),
     ExtractLess,
     new Webpack.optimize.ModuleConcatenationPlugin(),
     new HappyPack({
@@ -100,12 +96,16 @@ const config = {
     }),
     new HappyPack({
       id: 'less',
-      loaders: ['css-loader!postcss-loader!less-loader'],
+      loaders: [{
+          loader: "css-loader"
+      }, {
+          loader: "less-loader"
+      }],
       threadPool: happyThreadPool
     }),
     new HappyPack({
       id: 'css',
-      loaders: ['css-loader?mportLoaders=1'],
+      loaders: ['css-loader?importLoaders=1'],
       threadPool: happyThreadPool
     })
   ]
